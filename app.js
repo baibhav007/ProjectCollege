@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const studentRoutes = require('./api/student');
-const hostelRoutes = require('./api/hostel');
+const hostelRoutes = require('./routes/hostel');
+const studentRoutes = require('./routes/student');
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -14,12 +15,10 @@ mongoose.set('debug', true);
 async function connectDB() {
   try {
     await mongoose.connect('mongodb+srv://baibhavrishu97:esvugto1QitxBn5w@cluster0.2u7yh.mongodb.net/test?retryWrites=true&w=majority&appName=Cluster0', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 60000, // 30 seconds timeout
-      socketTimeoutMS: 90000,       
-      keepAlive: true,   // ✅ Prevents Vercel from disconnecting
-      maxPoolSize: 10,  // ✅ Limits connections to avoid timeouts
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 30000, // timeout for server selection
+        socketTimeoutMS: 45000, // socket timeout
     });
     console.log('✅ MongoDB connected successfully.');
   } catch (error) {
