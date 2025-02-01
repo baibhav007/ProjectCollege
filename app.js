@@ -14,9 +14,9 @@ const connectDB = async () => {
       await mongoose.connect('mongodb+srv://baibhavrishu97:esvugto1QitxBn5w@cluster0.2u7yh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        connectTimeoutMS: 30000, // Increased timeout
-        socketTimeoutMS: 45000, // Increased socket timeout
-        serverSelectionTimeoutMS: 5000, // Server selection timeout  
+        connectTimeoutMS: 60000, // 1 minute timeout
+        socketTimeoutMS: 60000,  // 1 minute socket timeout
+        serverSelectionTimeoutMS: 60000, // 1 minute server selection timeout
       });
       console.log('MongoDB connected');
     } catch (err) {
