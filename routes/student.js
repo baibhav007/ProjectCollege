@@ -1,36 +1,10 @@
 const express = require('express');
+const Student = require('../models/student'); // We'll create the model next
 const router = express.Router();
-const Student = require('../models/student');
 
-// POST /api/student
 router.post('/', async (req, res) => {
-  const {
-    name,
-    fatherName,
-    motherName,
-    tenthPassYear,
-    tenthPercentage,
-    twelfthPassYear,
-    twelfthPercentage,
-    streamInTwelfth,
-    college,
-    mobile,
-    address,
-  } = req.body;
-
-  const newStudent = new Student({
-    name,
-    fatherName,
-    motherName,
-    tenthPassYear,
-    tenthPercentage,
-    twelfthPassYear,
-    twelfthPercentage,
-    streamInTwelfth,
-    college,
-    mobile,
-    address,
-  });
+  const { name, fatherName, motherName, mobile } = req.body;
+  const newStudent = new Student({ name, fatherName, motherName, mobile });
 
   try {
     const savedStudent = await newStudent.save();
