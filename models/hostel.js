@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const HostelSchema = new mongoose.Schema({
+const hostelSchema = new mongoose.Schema({
   name: { type: String, required: true },
   mobile: { type: String, required: true },
   bedRequired: { type: Number },
@@ -9,6 +9,6 @@ const HostelSchema = new mongoose.Schema({
   recommendedBy: { type: String },
 }, { timestamps: true });
 
-const Hostel = mongoose.models.Hostel || mongoose.model("Hostel", HostelSchema);
+const Hostel =  mongoose.model("Hostel", hostelSchema);
 
 export default Hostel;
