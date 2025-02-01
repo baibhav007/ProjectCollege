@@ -8,7 +8,7 @@ const hostelSchema = new mongoose.Schema({
   budget: { type: Number },
   recommendedBy: { type: String },
 },
-{ timestamps: true } // Add timestamps option here
+{ timestamps: true } // Add timestamps option here 
 );
 
 const Hostel = mongoose.model('Hostel', hostelSchema);
