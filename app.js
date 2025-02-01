@@ -9,16 +9,20 @@ const app = express();
 // Middleware
 app.use(bodyParser.json());
 
-// MongoDB Connection
-mongoose.connect('mongodb+srv://baibhavrishu97:esvugto1QitxBn5w@cluster0.2u7yh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-connectTimeoutMS: 30000,
-
-})
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.log(err));
-
+const connectDB = async () => {
+    try {
+      await mongoose.connect('mongodb+srv://baibhavrishu97:esvugto1QitxBn5w@cluster0.2u7yh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        connectTimeoutMS: 30000,  // 30 seconds timeout
+      });
+      console.log('MongoDB connected');
+    } catch (err) {
+      console.log('MongoDB connection error:', err);
+    }
+  };
+  connectDB();
+  
 // Routes
 app.use('/api/student', studentRoutes);
 app.use('/api/hostel', hostelRoutes);
