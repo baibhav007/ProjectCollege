@@ -4,7 +4,7 @@
     "maxDuration": 60,  
       "memory": 1024     
       },
-      "api/hostet.js": {
+      "api/hostel.js": {
         "maxDuration": 60,   
       "memory": 1024       
       }
