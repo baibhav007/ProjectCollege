@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Student = require('../models/student');
-const connectDB = require('../db'); // Import DB connection
 
+// POST /api/student
 router.post('/', async (req, res) => {
-  await connectDB(); // Ensure DB is connected
-
   const {
     name,
     fatherName,

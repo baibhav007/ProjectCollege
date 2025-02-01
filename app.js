@@ -16,8 +16,8 @@ async function connectDB() {
     await mongoose.connect('mongodb+srv://baibhavrishu97:esvugto1QitxBn5w@cluster0.2u7yh.mongodb.net/test?retryWrites=true&w=majority', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 30000, // 30 seconds timeout
-      socketTimeoutMS: 45000,          // 45 seconds timeout
+      serverSelectionTimeoutMS: 60000, // 30 seconds timeout
+      socketTimeoutMS: 90000,          // 45 seconds timeout
     });
     console.log('✅ MongoDB connected successfully.');
   } catch (error) {
