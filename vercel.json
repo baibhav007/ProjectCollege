@@ -1,12 +1,8 @@
 {
     "functions": {
-      "api/student.js": {
+   "api/**/*.js": {
     "maxDuration": 60,  
       "memory": 1024     
-      },
-      "api/hostel.js": {
-        "maxDuration": 60,   
-      "memory": 1024       
       }
     }
   }

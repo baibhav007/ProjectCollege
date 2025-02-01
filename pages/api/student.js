@@ -1,7 +1,9 @@
-const mongoose = require('mongoose');
-const Student = require('../models/student'); // Adjust the path according to your folder structure
+const connectDB = require('../../lib/db'); // ✅ Import DB connection
+const Student = require('../../models/student'); // Adjust path if needed
 
 module.exports = async (req, res) => {
+  await connectDB(); // ✅ Ensure DB is connected before any operation
+
   if (req.method === 'POST') {
     const {
       name,
@@ -35,6 +37,7 @@ module.exports = async (req, res) => {
       const savedStudent = await newStudent.save();
       res.status(201).json(savedStudent);
     } catch (err) {
+      console.error('Insert error:', err);
       res.status(400).json({ message: err.message });
     }
   } else {
