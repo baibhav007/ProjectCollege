@@ -13,6 +13,8 @@ app.use(bodyParser.json());
 mongoose.connect('mongodb+srv://baibhavrishu97:esvugto1QitxBn5w@cluster0.2u7yh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+connectTimeoutMS: 30000,
+
 })
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.log(err));
