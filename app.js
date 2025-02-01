@@ -17,7 +17,9 @@ async function connectDB() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       serverSelectionTimeoutMS: 60000, // 30 seconds timeout
-      socketTimeoutMS: 90000,          // 45 seconds timeout
+      socketTimeoutMS: 90000,       
+      keepAlive: true,   // ✅ Prevents Vercel from disconnecting
+      maxPoolSize: 10,  // ✅ Limits connections to avoid timeouts
     });
     console.log('✅ MongoDB connected successfully.');
   } catch (error) {
