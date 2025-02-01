@@ -15,8 +15,8 @@ module.exports = async (req, res) => {
 
     // Handle POST request to add a hostel
     if (req.method === 'POST') {
-      const { name, bedRequired, visitTime, budget,mobile, recommendedBy } = req.body;
-      const newHostel = new Hostel({ name, bedRequired, visitTime,budget,recommendedBy, mobile });
+      const { name,mobile, bedRequired, visitTime, budget, recommendedBy } = req.body;
+      const newHostel = new Hostel({ name,mobile, bedRequired, visitTime,budget,recommendedBy });
 
       try {
         const savedHostel = await newHostel.save();
