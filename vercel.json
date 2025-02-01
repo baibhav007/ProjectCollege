@@ -1,0 +1,13 @@
+{
+    "functions": {
+      "api/student.js": {
+    "maxDuration": 60,  
+      "memory": 1024     
+      },
+      "api/hostel-request.js": {
+        "maxDuration": 60,   
+      "memory": 1024       
+      }
+    }
+  }
+  
