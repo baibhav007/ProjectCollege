@@ -1,23 +1,37 @@
-// routes/student.js
+// api/student.js
 
-const express = require('express');
-const Student = require('../models/student');  // Import the Student model
-const router = express.Router();
+const mongoose = require('mongoose');
+const Student = require('../models/student');
 
-// Handle POST request to create a new student
-router.post('/', async (req, res) => {
-  const { name, fatherName, motherName, mobile } = req.body;
-
-  // Create a new student document
-  const newStudent = new Student({ name, fatherName, motherName, mobile });
-
+// MongoDB connection (adjust connection settings for Vercel)
+const connectDB = async () => {
+  if (mongoose.connection.readyState >= 1) return;
+  
   try {
-    // Save the new student to the database
-    const savedStudent = await newStudent.save();
-    res.status(201).json(savedStudent); // Send the saved student as a response
-  } catch (err) {
-    res.status(400).json({ message: err.message }); // Handle any errors
+    await mongoose.connect('mongodb+srv://<your-mongo-uri>', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log('✅ MongoDB connected');
+  } catch (error) {
+    console.error('❌ MongoDB connection failed:', error);
   }
-});
+};
 
-module.exports = router;
+module.exports = async (req, res) => {
+  await connectDB(); // Ensure DB connection before handling the request
+
+  if (req.method === 'POST') {
+    const { name, fatherName, motherName, mobile } = req.body;
+    const newStudent = new Student({ name, fatherName, motherName, mobile });
+
+    try {
+      const savedStudent = await newStudent.save();
+      res.status(201).json(savedStudent); // Return the saved student as a response
+    } catch (err) {
+      res.status(400).json({ message: err.message }); // Handle any errors
+    }
+  } else {
+    res.status(405).json({ message: 'Method Not Allowed' }); // Method not allowed for other HTTP methods
+  }
+};
