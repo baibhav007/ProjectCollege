@@ -1,3 +1,5 @@
+// api/admin.mjs
+
 import express from 'express';
 import mongoose from 'mongoose';
 import AdminJS from 'adminjs';
@@ -8,24 +10,24 @@ import * as AdminJSMongoose from '@adminjs/mongoose';
 import Student from '../models/student.js';
 import Hostel from '../models/hostel.js';
 
-
-// Connect AdminJS with Mongoose
-AdminJS.registerAdapter(AdminJSMongoose);
-
+// Create Express app
 const app = express();
 
+// CORS setup
 const cors = require('cors');
-app.use(cors({ origin: '*' })); 
+app.use(cors({ origin: '*' }));
 
-app.use(express.static('public'));  // This will serve files from the 'public' directory
+app.use(express.static('public'));  // Serve static files from 'public' folder
 
-
-// Connect to MongoDB
+// MongoDB connection
 mongoose.connect('mongodb+srv://baibhavrishu97:esvugto1QitxBn5w@cluster0.2u7yh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
+
+// Register AdminJS with Mongoose
+AdminJS.registerAdapter(AdminJSMongoose);
 
 // Configure AdminJS
 const adminJs = new AdminJS({
@@ -33,26 +35,26 @@ const adminJs = new AdminJS({
     { resource: Student, options: { parent: { name: 'Database' } } },
     { resource: Hostel, options: { parent: { name: 'Database' } } }
   ],
-  rootPath: '/admin',
+  rootPath: '/admin',  // Admin panel accessible at '/admin'
 });
 
-// Build and use the authenticated router
+// Build AdminJS router with authentication
 const adminRouter = AdminJSExpress.buildAuthenticatedRouter(adminJs, {
   authenticate: async (email, password) => {
     if (email === 'admin@example.com' && password === 'password123') {
-      return { email };
+      return { email };  // Valid admin login
     }
-    return null;
+    return null;  // Invalid login
   },
-  cookiePassword: 'session-secret',
+  cookiePassword: 'session-secret',  // For session management
 });
 
-app.use(adminJs.options.rootPath, (req, res, next) => {
-  console.log(`Admin route hit: ${req.url}`);
-  next(); // continue with the request handling
-}, adminRouter);
+// Vercel serverless function handler
+export default function handler(req, res) {
+  app.use(adminJs.options.rootPath, (req, res, next) => {
+    console.log(`Admin route hit: ${req.url}`);
+    next(); // Proceed with the request
+  }, adminRouter);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Admin panel is running at http://localhost:${PORT}/admin`);
-});
+  app(req, res);  // Execute the Express app
+}
