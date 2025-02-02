@@ -15,8 +15,8 @@ import Hostel from '../models/hostel.js';
 const app = express();
 
 // CORS setup
-const cors = require('cors');
-app.use(cors({ origin: '*' }));
+// const cors = require('cors');
+// app.use(cors({ origin: '*' }));
 
 app.use(express.static('public'));  // Serve static files from 'public' folder
 
