@@ -47,7 +47,10 @@ const adminRouter = AdminJSExpress.buildAuthenticatedRouter(adminJs, {
   cookiePassword: 'session-secret',
 });
 
-app.use(adminJs.options.rootPath, adminRouter);
+app.use(adminJs.options.rootPath, (req, res, next) => {
+  console.log(`Admin route hit: ${req.url}`);
+  next(); // continue with the request handling
+}, adminRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
