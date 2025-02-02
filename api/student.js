@@ -1,22 +1,38 @@
-const cors = require('cors');
-const mongoose = require('mongoose');
-const Student = require('../models/student');
+import cors from 'cors';
+import mongoose from 'mongoose';
+import Student from '../models/student.js';
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   // Enable CORS (if necessary)
   cors()(req, res, async () => {
     // MongoDB connection check
     if (mongoose.connection.readyState === 0) {
-      await mongoose.connect('mongodb+srv://baibhavrishu97:esvugto1QitxBn5w@cluster0.2u7yh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
+      try {
+        await mongoose.connect('mongodb+srv://baibhavrishu97:esvugto1QitxBn5w@cluster0.2u7yh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        });
+      } catch (err) {
+        return res.status(500).json({ message: 'Database connection failed', error: err.message });
+      }
     }
 
     // Handle POST request to add a student
     if (req.method === 'POST') {
-      const { name, fatherName, motherName,tenthPassYear,tenthPercentage, twelfthPassYear,twelfthPercentage,streamInTwelfth,college,  mobile, address } = req.body;
-      const newStudent = new Student({ name, fatherName, motherName,tenthPassYear,tenthPercentage, twelfthPassYear,twelfthPercentage,streamInTwelfth,college, mobile,address });
+      const { name, fatherName, motherName, tenthPassYear, tenthPercentage, twelfthPassYear, twelfthPercentage, streamInTwelfth, college, mobile, address } = req.body;
+      const newStudent = new Student({
+        name,
+        fatherName,
+        motherName,
+        tenthPassYear,
+        tenthPercentage,
+        twelfthPassYear,
+        twelfthPercentage,
+        streamInTwelfth,
+        college,
+        mobile,
+        address,
+      });
 
       try {
         const savedStudent = await newStudent.save();
