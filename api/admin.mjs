@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import AdminJS from 'adminjs';
 import AdminJSExpress from '@adminjs/express';
 import * as AdminJSMongoose from '@adminjs/mongoose';
+import assert from 'assert'
 
 // Import models
 import Student from '../models/student.js';
