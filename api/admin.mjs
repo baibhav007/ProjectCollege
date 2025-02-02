@@ -14,6 +14,9 @@ AdminJS.registerAdapter(AdminJSMongoose);
 
 const app = express();
 
+const cors = require('cors');
+app.use(cors({ origin: '*' })); 
+
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://baibhavrishu97:esvugto1QitxBn5w@cluster0.2u7yh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
   useNewUrlParser: true,
